@@ -1,0 +1,8 @@
+const body=document.body,nav=document.querySelector('nav'),menu=document.querySelector('.menu-toggle'),theme=document.querySelector('.theme-toggle');
+const savedTheme=localStorage.getItem('theme'); if(savedTheme==='dark'){body.classList.add('dark');theme.textContent='☀';}
+menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',open);menu.setAttribute('aria-label',open?'Close navigation':'Open navigation');});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+theme.addEventListener('click',()=>{const dark=body.classList.toggle('dark');localStorage.setItem('theme',dark?'dark':'light');theme.textContent=dark?'☀':'☾';});
+document.querySelectorAll('.filters button').forEach(button=>button.addEventListener('click',()=>{document.querySelector('.filters .active').classList.remove('active');button.classList.add('active');document.querySelectorAll('.project-card').forEach(card=>{card.hidden=button.dataset.filter!=='all'&&card.dataset.category!==button.dataset.filter;});}));
+document.getElementById('contact-form').addEventListener('submit',event=>{event.preventDefault();const data=new FormData(event.currentTarget),subject=encodeURIComponent(`Portfolio enquiry from ${data.get('name')}`),message=encodeURIComponent(`${data.get('message')}\n\nReply to: ${data.get('email')}`);window.location.href=`mailto:varshithbillakanti94@gmail.com?subject=${subject}&body=${message}`;event.currentTarget.querySelector('.form-status').textContent='Your email app is opening with your message.';});
+document.getElementById('year').textContent=new Date().getFullYear();
